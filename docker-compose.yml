@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres
+    container_name: Copa_Test_DB
+    networks:
+      - copa_test_network
+    environment:
+      POSTGRES_PASSWORD: Copa_pw
+
+  ubuntu:
+    image: ubuntu
+    container_name: Copa_Test_Ubuntu
+    networks:
+      - copa_test_network
+    command: tail -f /dev/null  # Esto mantiene el contenedor ejecutándose indefinidamente
+
+networks:
+  copa_test_network:
+    driver: bridge

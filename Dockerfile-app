@@ -1,26 +1,29 @@
 # Usa la imagen oficial de Ubuntu como base
-FROM ubuntu
+FROM ubuntu:latest
 
 # Instala actualizaciones y paquetes necesarios
-RUN apt update && apt install -y \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     git \
     python3 \
     python3-venv \
-    python3-pip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Crea una carpeta de trabajo
-RUN mkdir /Copa_Test
+WORKDIR /Copa_Test
 
-# Establece el directorio de trabajo
-WORKDIR /Copa
+# Clona el repositorio de GitHub
+RUN git clone https://github.com/bhirschb16/Copa.git
 
-# Clona el repositorio de GitHub si es necesario
-RUN git clone https://github.com/bryamhirsch/Copa_Test.git
+# Establece el directorio de trabajo dentro del repositorio clonado
+WORKDIR /Copa_Test/Copa
 
-# Instala las dependencias de Python si es necesario
-#RUN pip install -r requirements.txt
+# Crea y activa el entorno virtual Python
+#RUN python3 -m venv Copa_Venv && \
+#    . Copa_Venv/bin/activate && \
+#    pip install --no-cache-dir -r requirements.txt
 
-# Ejecuta cualquier otro comando necesario
-# RUN <comandos_adicionales>
+# CMD o ENTRYPOINT para ejecutar tu script Python
+#CMD ["python", "0_creacion_bd_postgres.py"]
