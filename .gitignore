@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+/Copa_Venv
 
 # Spyder project settings
 .spyderproject
