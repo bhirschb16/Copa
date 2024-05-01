@@ -1,0 +1,26 @@
+# Usa la imagen oficial de Ubuntu como base
+FROM ubuntu
+
+# Instala actualizaciones y paquetes necesarios
+RUN apt update && apt install -y \
+    git \
+    python3 \
+    python3-venv \
+    python3-pip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crea una carpeta de trabajo
+RUN mkdir /Copa_Test
+
+# Establece el directorio de trabajo
+WORKDIR /Copa
+
+# Clona el repositorio de GitHub si es necesario
+RUN git clone https://github.com/bryamhirsch/Copa_Test.git
+
+# Instala las dependencias de Python si es necesario
+#RUN pip install -r requirements.txt
+
+# Ejecuta cualquier otro comando necesario
+# RUN <comandos_adicionales>
