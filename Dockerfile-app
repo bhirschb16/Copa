@@ -20,10 +20,11 @@ RUN git clone https://github.com/bhirschb16/Copa.git
 # Establece el directorio de trabajo dentro del repositorio clonado
 WORKDIR /Copa_Test/Copa
 
-# Crea y activa el entorno virtual Python
-#RUN python3 -m venv Copa_Venv && \
-#    . Copa_Venv/bin/activate && \
-#    pip install --no-cache-dir -r requirements.txt
+RUN git pull
 
-# CMD o ENTRYPOINT para ejecutar tu script Python
-#CMD ["python", "0_creacion_bd_postgres.py"]
+# Crea un entorno virtual
+RUN python3 -m venv Copa_Venv
+
+# Activa el entorno virtual e instala los requisitos
+RUN . Copa_Venv/bin/activate && pip install --no-cache-dir -r requirements.txt
+

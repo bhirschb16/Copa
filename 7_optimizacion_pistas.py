@@ -25,13 +25,15 @@ try:
 
     # Convertir las columnas de tiempo programado y estimado en objetos datetime
     df['scheduled'] = pd.to_datetime(df['scheduled'])
-    df['estimated'] = pd.to_datetime(df['estimated'])
-
-    # Calcular la diferencia de tiempo entre el tiempo programado y estimado
-    df['Time_Difference'] = (df['estimated'] - df['scheduled']).dt.total_seconds() / 60
 
     # Ordenar los vuelos por hora de despegue programada
     df_sorted = df.sort_values(by='scheduled')
+
+    # Calcular la diferencia de tiempo entre vuelos consecutivos
+    df_sorted['Time_Difference'] = df_sorted['scheduled'].diff().dt.total_seconds() / 60
+
+    # Llenar el valor de la primera fila con cero, ya que no hay diferencia para el primer vuelo
+    df_sorted['Time_Difference'].iloc[0] = 0
 
     # Obtener la lista de nombres de los vuelos ordenados
     flight_names = df_sorted.index.tolist()
@@ -62,8 +64,7 @@ try:
             print(f"Vuelo {flight_name} asignado a la Pista B")
 
     # Mostrar la suma total de diferencias de tiempo entre despegues
-    print("Total de tiempo entre despegues optimizado:", pulp.value(prob.objective))
-    
+    print("Total de tiempo entre despegues optimizado en minutos:", pulp.value(prob.objective))
     
 except psycopg2.Error as e:
     print("Error al conectar a PostgreSQL:", e)

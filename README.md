@@ -41,3 +41,24 @@ $ python3 -m venv Copa_Venv
 $ source Copa_Venv/bin/activate
 ## Instalación de Librerias
 $ pip install psycopg2-binary
+
+
+
+
+
+#################
+## Creacion del Network para el proyecto 
+$ docker network create copa_test_network
+
+##
+docker build -t postgres -f Dockerfile .
+
+##
+docker build -t ubuntu -f Dockerfile-app .
+
+##
+docker run --name Copa_Test_Ubuntu --network copa_test_network -it ubuntu /bin/bash
+
+##
+docker run --name Copa_Test_DB --network copa_test_network -e POSTGRES_PASSWORD=Copa_pw -d -p 5432:5432 postgres
+

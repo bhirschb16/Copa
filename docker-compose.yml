@@ -1,19 +1,29 @@
 services:
   postgres:
-    image: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: Copa_Test_DB
     networks:
-      - copa_test_network
+      copa_test_network:
+        ipv4_address: 172.18.0.2
     environment:
       POSTGRES_PASSWORD: Copa_pw
 
   ubuntu:
-    image: ubuntu
+    build:
+      context: .
+      dockerfile: Dockerfile-app
     container_name: Copa_Test_Ubuntu
     networks:
       - copa_test_network
-    command: tail -f /dev/null  # Esto mantiene el contenedor ejecutándose indefinidamente
+    command: tail -f /dev/null
 
 networks:
   copa_test_network:
     driver: bridge
+    name: copa_test_network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16

@@ -18,7 +18,7 @@ sql = "CREATE DATABASE aviacion_db";
 
 ## executing above query
 cursor.execute(sql)
-print("Database has been created successfully !!");
+print("Base de Datos aviacion_db creada exisotamente!!");
  
 # Closing the connection
 conn.close()

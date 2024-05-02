@@ -53,6 +53,7 @@ try:
     plt.legend()
     plt.grid(True)
     plt.savefig('/Copa_Test/curva_ajustada_despegue.png')
+    print("El grafico se ha guardado en el root del proyecto para su visualización!!")
     plt.show()
     
     
